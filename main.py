@@ -53,17 +53,19 @@ def guarda(Esponente, Parte_reale, Parte_immaginaria):
     if Esponente=="" or Parte_reale=="" or Parte_immaginaria=="":
         errore()
     else:
-        if "sqrt" or "/" in Parte_reale :
-            Parte_reale= eval(Parte_reale)
-        if "sqrt" or "/" in Parte_immaginaria :
-            Parte_immaginaria= eval(Parte_immaginaria)
-
-
         try:
+
+
+
+            Parte_immaginaria= eval(Parte_immaginaria)
+            Parte_reale= eval(Parte_reale)
+            Parte_immaginaria =int(Parte_immaginaria)
+            Parte_reale = int(Parte_reale)
             Esponente=int(Esponente)
-            Parte_reale=int(Parte_reale)
-            Parte_immaginaria=int(Parte_immaginaria)
+
         except ValueError:
+            errore()
+        except NameError:
             errore()
 
 
@@ -87,7 +89,7 @@ label_immaginaria.grid(row=1, column=0)
 Parte_immaginaria = Entry(root, width=10, text="Parte Immaginaria", )
 Parte_immaginaria.grid(row=1, column=1)
 
-Label_Esponente = Label(root, text="Esponente:")
+Label_Esponente = Label(root, text="Esponente di 2 → (2^n):")
 Label_Esponente.grid(row=2, column=0)
 Esponente = Entry(root, width=10, text="Esponente di 2", )
 Esponente.grid(row=2, column=1)
