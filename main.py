@@ -30,13 +30,13 @@ def Elabora(Esponente, Parte_reale, Parte_immaginaria):
     message="I risultati sono i seguenti:\n\n"
     P = sp.sqrt(module)
 
-    message+=str(sp.simplify(P * (sp.cos(theta) + sp.sin(theta) * sp.I)))+"\n"
+    message+="•\t"+str(sp.simplify(P * (sp.cos(theta) + sp.sin(theta) * sp.I)))+"\n"
     ##valore+=str(P*(np.cos(thetaval)+ np.sin(thetaval)*1j))
 
     for x in range(1, n):
         theta = theta + (2 * sp.pi / n)
         #thetaval= np.degrees(thetaval) + (360/n)
-        message += str(sp.simplify(P * (sp.cos(theta) + sp.sin(theta) * sp.I)))+"\n"
+        message += "•\t"+str(sp.simplify(P * (sp.cos(theta) + sp.sin(theta) * sp.I)))+"\n"
         ##valore += str(P * (np.cos(thetaval) + np.sin(thetaval) * 1j))+"\n"
 
     tkinter.messagebox.showinfo("Radici", message)
