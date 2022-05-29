@@ -8,41 +8,59 @@ root = Tk()
 root.title("Radici di numeri complessi")
 root.geometry("500x400")
 
+def bisezione(obj, cs):
+    if (obj == "sin"):
+        return sp.sqrt((1 - cs) / 2)
+    elif (obj == "cos"):
+        return sp.sqrt((1 + cs) / 2)
+
 
 # Elaboration
 def Elabora(Esponente, Parte_reale, Parte_immaginaria):
-    n = pow(2, Esponente)
 
+    n = pow(2, Esponente)
+    m = int(n / 2)
     complex = Parte_reale + Parte_immaginaria * sp.I
 
-    angle = sp.arg(complex)
-    module = sp.Abs(complex)
+    # calcolo dati iniziali
+    module = (sp.Abs(complex))
+    P = module
+    for x in range(Esponente):
+        P = sp.sqrt(P)
 
-    angle = angle + sp.pi * 2
+    costeta = sp.re(complex) / module
+    sinteta = sp.im(complex) / module
 
-    theta = angle / n
-    '''
-    thetaval=str(theta)
-    thetaval=thetaval.replace("pi","np.pi")
-    thetaval=eval(thetaval)
-    '''
-    ##valore ="I risultati sono: \n\n"
-    message="I risultati sono i seguenti:\n\n"
-    P = sp.sqrt(module)
+    coseni = []
+    sini = []
 
-    message+="•\t"+str(sp.simplify(P * (sp.cos(theta) + sp.sin(theta) * sp.I)))+"\n"
-    ##valore+=str(P*(np.cos(thetaval)+ np.sin(thetaval)*1j))
+    for x in range(m):
+        sinm = 0
+        if x % 2 == 0:
+            cosm = 1
+        elif x % 2 == 1:
+            cosm = -1
 
-    for x in range(1, n):
-        theta = theta + (2 * sp.pi / n)
-        #thetaval= np.degrees(thetaval) + (360/n)
-        message += "•\t"+str(sp.simplify(P * (sp.cos(theta) + sp.sin(theta) * sp.I)))+"\n"
-        ##valore += str(P * (np.cos(thetaval) + np.sin(thetaval) * 1j))+"\n"
+        costeta = sp.simplify((costeta * cosm) - (sinteta * sinm))
+        sinteta = sp.simplify((sinteta * cosm) + (costeta * sinm))
 
-    tkinter.messagebox.showinfo("Radici", message)
-    ##tkinter.messagebox.showinfo("Valori", valore)
+        for y in range(m):
+            sinteta = bisezione("sin", costeta)
+            costeta = bisezione("cos", costeta)
 
-    print(theta)
+        for l in range(m):
+            sini.append(sinteta)
+            sini.append(-sinteta)
+            coseni.append(costeta)
+            coseni.append(-costeta)
+
+    message=""
+    for x in range(n):
+        message+="• \t"+(str(P * (coseni[x] + sini[x] * sp.I)))+"\n"
+
+    tkinter.messagebox.showinfo("Soluzioni", message)
+
+
 def errore():
     tkinter.messagebox.showwarning("Errore", "Inserire correttamente i dati")
 
@@ -70,7 +88,7 @@ def guarda(Esponente, Parte_reale, Parte_immaginaria):
 
 
     if(Esponente==0):
-        tkinter.messagebox.showwarning("Risultato", "Il risultato uguale a "+Parte_reale+" + "+Parte_immaginaria+"i")
+        tkinter.messagebox.showwarning("Risultato", "Il risultato uguale a 1 ")
 
     else:
         Elabora(Esponente, Parte_reale, Parte_immaginaria)
