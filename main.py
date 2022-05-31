@@ -1,9 +1,9 @@
 import tkinter.messagebox
 from tkinter import *
 import sympy as sp
-
-import numpy as np
 from sympy import sqrt
+
+
 root = Tk()
 root.title("Radici di numeri complessi")
 root.geometry("500x400")
@@ -25,11 +25,14 @@ def Elabora(Esponente, Parte_reale, Parte_immaginaria):
     # calcolo dati iniziali
     module = (sp.Abs(complex))
     P = module
+
     for x in range(Esponente):
         P = sp.sqrt(P)
 
     costeta = sp.re(complex) / module
     sinteta = sp.im(complex) / module
+
+    print(sinteta,costeta)
 
     coseni = []
     sini = []
@@ -43,20 +46,28 @@ def Elabora(Esponente, Parte_reale, Parte_immaginaria):
 
         costeta = sp.simplify((costeta * cosm) - (sinteta * sinm))
         sinteta = sp.simplify((sinteta * cosm) + (costeta * sinm))
-
         for y in range(m):
-            sinteta = bisezione("sin", costeta)
-            costeta = bisezione("cos", costeta)
+            if sinteta>0 :
 
-        for l in range(m):
-            sini.append(sinteta)
-            sini.append(-sinteta)
-            coseni.append(costeta)
-            coseni.append(-costeta)
+                sinteta = bisezione("sin", costeta)
+                costeta = bisezione("cos", costeta)
+            else:
+                sinteta = bisezione("sin", costeta)
+                costeta = -bisezione("cos", costeta)
+
+
+        if x%2==0:
+            for l in range(m):
+                sini.append(-sinteta)
+                sini.append(sinteta)
+                coseni.append(-costeta)
+                coseni.append(costeta)
+
 
     message=""
-    for x in range(n):
-        message+="• \t"+(str(P * (coseni[x] + sini[x] * sp.I)))+"\n"
+    for x in range(len(sini)):
+
+        message+="• \t"+(str(P * (coseni[x] + sini[x] * sp.I)))+"\n\n"
 
     tkinter.messagebox.showinfo("Soluzioni", message)
 
